@@ -1,10 +1,10 @@
 # Deploy the Express backend on Render (recommended alongside Vercel frontend).
 # Docs: https://render.com/docs/infrastructure-as-code
 #
-# After deploy, set Vercel env vars:
-#   NEXT_PUBLIC_API_URL=https://<this-service>.onrender.com
-#   NEXT_PUBLIC_WS_URL=wss://<this-service>.onrender.com
-#   FRONTEND_URL on backend = https://<your-app>.vercel.app
+# After deploy, set Vercel env vars (also in frontend/vercel.json):
+#   NEXT_PUBLIC_API_URL=https://avyrix-backend.onrender.com
+#   NEXT_PUBLIC_WS_URL=wss://avyrix-backend.onrender.com
+#   FRONTEND_URL on backend = https://avyrix.vercel.app
 
 services:
   - type: web

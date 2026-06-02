@@ -1,4 +1,5 @@
 import type { AxiosError } from 'axios';
+import { config } from '@/lib/config';
 
 type ApiErrorBody = {
   error?: { message?: string; code?: string };
@@ -20,7 +21,11 @@ export function getApiErrorMessage(
   if (apiMessage) return apiMessage;
 
   if (!err.response) {
-    return 'Cannot reach the server. Make sure the backend is running on port 3001.';
+    const isLocalDev = config.apiBaseUrl.includes('localhost');
+    if (isLocalDev) {
+      return 'Cannot reach the server. Make sure the backend is running on port 3001.';
+    }
+    return `Cannot reach the server at ${config.apiBaseUrl}. Check that the backend is online and CORS is configured.`;
   }
 
   return fallback;
