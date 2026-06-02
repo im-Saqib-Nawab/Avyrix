@@ -8,10 +8,10 @@
   },
   "scripts": {
     "dev": "tsx watch src/server.ts",
-    "build": "prisma generate && tsc",
+    "build": "prisma generate && tsc && tsc-alias",
     "postinstall": "prisma generate",
-    "start": "node -r tsconfig-paths/register dist/server.js",
-    "start:prod": "prisma migrate deploy && node -r tsconfig-paths/register dist/server.js",
+    "start": "node dist/server.js",
+    "start:prod": "prisma migrate deploy && node dist/server.js",
     "migrate": "prisma migrate dev",
     "migrate:deploy": "prisma migrate deploy",
     "generate": "prisma generate",
@@ -62,6 +62,7 @@
     "@types/ws": "^8.5.14",
     "prisma": "^6.4.1",
     "ts-node": "^10.9.2",
+    "tsc-alias": "^1.8.10",
     "tsconfig-paths": "^4.2.0",
     "tsx": "^4.19.3",
     "typescript": "^5.8.2"
