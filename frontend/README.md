@@ -51,12 +51,19 @@ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_...
 2. [Vercel](https://vercel.com) → **Add New Project** → import repo.
 3. Set **Root Directory** to `frontend`.
 4. Framework: **Next.js** (auto-detected).
-5. Add environment variables (see above).
-6. Deploy.
+5. Leave **Install Command** and **Build Command** as default (`npm install`, `npm run build`).  
+   Do **not** use `--prefix frontend` here — that prefix is only for Option B. Using it with Root Directory `frontend` causes `frontend/frontend/package.json` not found errors.
+6. Add environment variables (see above).
+7. Deploy.
+
+Settings are also pinned in [`vercel.json`](vercel.json) in this folder.
 
 ### Option B — Deploy from monorepo root
 
-Use the root [`vercel.json`](../vercel.json) at repo root. Vercel will run `npm run build --prefix frontend`.
+1. Leave **Root Directory** empty (repo root).
+2. Use the root [`vercel.json`](../vercel.json). Vercel will run `npm run build --prefix frontend`.
+
+Do not mix Option A and B (e.g. Root Directory `frontend` + `--prefix frontend` install command).
 
 ### Vercel settings summary
 
