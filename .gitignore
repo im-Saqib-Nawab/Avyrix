@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+
+# Environment (never commit secrets)
+.env
+.env.*
+!.env.example
+
+# Build / cache
+dist/
+.next/
+out/
+*.tsbuildinfo
+
+# Logs
+logs/
+*.log
+
+# OS & editors
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Deploy local config
+.vercel

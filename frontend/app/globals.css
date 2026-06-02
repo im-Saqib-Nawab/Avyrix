@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+:root {
+  --bg-base:        #0B0D12;   /* deepest layer */
+  --bg-section:     #111522;   /* elevated section */
+  --bg-card:        #151B2C;   /* card surface */
+  --bg-float:       #1A2135;   /* hover/active */
+  --bg-input:       #111827;   /* inputs */
+
+  --border-default: rgba(255,255,255,0.06);
+  --border-hover:   rgba(255,255,255,0.12);
+  --border-focus:   rgba(99,102,241,0.6);
+
+  --text-primary:   #EDEFF5;
+  --text-secondary: #9AA4B2;
+  --text-muted:     #6B7280;
+  --text-disabled:  #3F4559;
+
+  --accent-indigo:  #6366F1;
+  --accent-violet:  #A855F7;
+  --accent-cyan:    #22D3EE;
+
+  --success:  #22C55E;
+  --error:    #EF4444;
+  --warning:  #F59E0B;
+
+  --gradient-primary:   linear-gradient(135deg, #6366F1, #A855F7);
+  --gradient-hero-text: linear-gradient(135deg, #EDEFF5 0%, #A5B4FC 100%);
+}
+
+html,
+body {
+  overflow-x: hidden;
+}
+
+body {
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-geist-sans), sans-serif;
+  -webkit-font-smoothing: antialiased;
+  margin: 0;
+  padding: 0;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-base);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bg-section);
+  border-radius: 10px;
+  border: 2px solid var(--bg-base);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--bg-card);
+}
+
+@layer utilities {
+  .text-gradient-primary {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
