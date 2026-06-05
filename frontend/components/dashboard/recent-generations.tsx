@@ -117,7 +117,7 @@ export function RecentGenerations() {
                 setSelected(gen);
               }
             }}
-            className="flex h-full cursor-pointer flex-col overflow-hidden border-default bg-card transition-all duration-300 hover:-translate-y-0.5 hover:shadow-card-hover"
+            className="card-gradient-top flex h-full cursor-pointer flex-col overflow-hidden border-white/10 glass-card hover-lift hover-glow"
           >
             <div className="relative aspect-video w-full bg-input">
               {gen.thumbnail_url && gen.status !== 'failed' ? (

@@ -191,7 +191,7 @@ export default function LibraryPage() {
       {/* Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="space-y-1">
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">
+          <h1 className="text-3xl font-bold text-gradient-hero">
             My Library
           </h1>
           <p className="text-secondary">
@@ -228,7 +228,7 @@ export default function LibraryPage() {
       ) : (
         <>
           {/* Filter bar */}
-          <div className="space-y-4 rounded-2xl border border-white/10 bg-card p-4">
+          <div className="space-y-4 rounded-2xl border border-white/10 glass-card p-4">
             <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
               {/* Type tabs */}
               <div className="flex gap-1 overflow-x-auto rounded-xl bg-input p-1">
@@ -340,7 +340,7 @@ export default function LibraryPage() {
                     <article
                       key={asset.id}
                       className={cn(
-                        "group relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 bg-card transition-all duration-300 hover:border-accent-indigo/30 hover:shadow-glow-indigo",
+                        "group relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 glass-card transition-all duration-200 hover:border-glow hover:shadow-glow-indigo hover-lift",
                         isSelectionMode && "cursor-pointer",
                         selectedAssets.has(asset.id) && "border-accent-indigo ring-2 ring-accent-indigo"
                       )}
@@ -352,7 +352,7 @@ export default function LibraryPage() {
                           <div className={cn(
                             "h-5 w-5 rounded-md border-2 flex items-center justify-center transition-colors",
                             selectedAssets.has(asset.id) 
-                              ? "bg-accent-indigo border-accent-indigo" 
+                              ? "bg-accent-indigo border-accent-indigo shadow-glow-indigo" 
                               : "border-white/30 bg-black/50"
                           )}>
                             {selectedAssets.has(asset.id) && <Check className="h-3 w-3 text-white" />}
@@ -427,7 +427,7 @@ export default function LibraryPage() {
 
                       {/* Hover overlay actions */}
                       {!isSelectionMode && (
-                        <div className="absolute inset-0 z-20 flex flex-col justify-between bg-black/80 p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                        <div className="absolute inset-0 z-20 flex flex-col justify-between bg-gradient-to-t from-accent-indigo/90 via-accent-violet/60 to-transparent p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                           <p className="line-clamp-3 text-xs leading-relaxed text-white">
                             {asset.prompt}
                           </p>

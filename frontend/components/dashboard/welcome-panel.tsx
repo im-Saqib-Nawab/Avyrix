@@ -18,20 +18,21 @@ export function WelcomePanel() {
   const credits = user?.credit_balance ?? 0;
 
   return (
-    <div className="relative overflow-hidden rounded-3xl border border-default bg-card p-8 shadow-card">
-      <div className="pointer-events-none absolute right-0 top-0 h-64 w-64 -translate-y-1/2 rounded-full bg-accent-indigo/10 blur-[100px]" />
+    <div className="card-gradient-top relative overflow-hidden rounded-3xl border border-white/10 glass-card p-8 shadow-card">
+      <div className="pointer-events-none absolute right-0 top-0 h-64 w-64 -translate-y-1/2 rounded-full bg-accent-indigo/15 blur-[100px]" />
+      <div className="pointer-events-none absolute -bottom-16 -left-16 h-48 w-48 rounded-full bg-accent-pink/10 blur-[80px]" />
 
       <div className="relative z-10 flex flex-col justify-between gap-8 lg:flex-row lg:items-center">
         <div className="space-y-4">
           <div className="space-y-1">
-            <h1 className="text-3xl font-bold text-primary md:text-4xl">
+            <h1 className="text-3xl font-bold text-gradient-hero md:text-4xl">
               {getTimeGreeting()}, {firstName}!
             </h1>
             <p className="text-lg text-secondary">What will you create today?</p>
           </div>
 
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
-            <Zap className="h-4 w-4 fill-amber-400 text-amber-400" />
+          <div className="inline-flex items-center gap-2 rounded-full border border-accent-cyan/30 bg-gradient-to-r from-accent-indigo/10 to-accent-cyan/10 px-3 py-1.5 animate-glow-pulse">
+            <Zap className="h-4 w-4 fill-accent-cyan text-accent-cyan" />
             <span className="text-sm font-medium text-primary">{credits} credits remaining</span>
           </div>
         </div>
@@ -44,7 +45,7 @@ export function WelcomePanel() {
             </Button>
           </Link>
           <Link href="/generate/video">
-            <Button variant="secondary" size="lg" className="h-12 w-full bg-float px-8 hover:bg-white/10 sm:w-auto">
+            <Button variant="secondary" size="lg" className="h-12 w-full px-8 sm:w-auto">
               <Video className="mr-2 h-5 w-5" />
               Generate Video
             </Button>

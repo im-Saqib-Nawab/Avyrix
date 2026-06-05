@@ -196,7 +196,7 @@ export default function HistoryPage() {
     <div className="space-y-8 pb-16">
       {/* Header */}
       <div className="space-y-2">
-        <h1 className="text-3xl font-bold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">
+        <h1 className="text-3xl font-bold text-gradient-hero">
           Generation History
         </h1>
         <p className="text-secondary">
@@ -207,21 +207,21 @@ export default function HistoryPage() {
       {/* Stats summary */}
       {!isLoading && filteredItems.length > 0 && (
         <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-          <div className="rounded-xl border border-white/10 bg-card p-4">
+          <div className="card-gradient-top rounded-xl border border-white/10 glass-card p-4 transition-all duration-200 hover-lift">
             <p className="text-xs text-muted uppercase tracking-wider">Total Generations</p>
             <p className="mt-1 text-2xl font-bold text-primary">{filteredItems.length}</p>
           </div>
-          <div className="rounded-xl border border-white/10 bg-card p-4">
+          <div className="card-gradient-top rounded-xl border border-white/10 glass-card p-4 transition-all duration-200 hover-lift">
             <p className="text-xs text-muted uppercase tracking-wider">Total Credits Used</p>
             <p className="mt-1 text-2xl font-bold text-accent-indigo">{totalCreditsUsed}</p>
           </div>
-          <div className="rounded-xl border border-white/10 bg-card p-4">
+          <div className="card-gradient-top rounded-xl border border-white/10 glass-card p-4 transition-all duration-200 hover-lift">
             <p className="text-xs text-muted uppercase tracking-wider">Images</p>
             <p className="mt-1 text-2xl font-bold text-primary">
               {filteredItems.filter(i => i.type === 'image').length}
             </p>
           </div>
-          <div className="rounded-xl border border-white/10 bg-card p-4">
+          <div className="card-gradient-top rounded-xl border border-white/10 glass-card p-4 transition-all duration-200 hover-lift">
             <p className="text-xs text-muted uppercase tracking-wider">Videos</p>
             <p className="mt-1 text-2xl font-bold text-primary">
               {filteredItems.filter(i => i.type === 'video').length}
@@ -249,7 +249,7 @@ export default function HistoryPage() {
                 setSearchQuery(e.target.value);
                 setPage(1);
               }}
-              className="w-full rounded-xl border border-white/10 bg-input py-2.5 pl-10 pr-4 text-sm text-primary placeholder:text-muted focus:border-accent-indigo focus:outline-none focus:ring-1 focus:ring-accent-indigo"
+              className="glass-input w-full rounded-xl py-2.5 pl-10 pr-4 text-sm text-primary placeholder:text-muted focus:border-accent-cyan focus:outline-none focus:ring-2 focus:ring-accent-cyan/15"
             />
           </div>
           <button
@@ -345,14 +345,14 @@ export default function HistoryPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: groupIdx * 0.05 }}
             >
-              <h3 className="mb-3 text-sm font-semibold text-muted uppercase tracking-wider">
+              <h3 className="sticky-glass-header mb-3 rounded-lg px-3 py-2 text-sm font-semibold uppercase tracking-wider text-muted">
                 {date}
               </h3>
               <div className="space-y-3">
                 {items.map((gen) => (
                   <div
                     key={gen.listKey}
-                    className="group flex flex-col gap-4 rounded-2xl border border-white/10 bg-card p-4 transition-all hover:border-accent-indigo/30 hover:bg-float hover:shadow-lg sm:flex-row sm:items-center"
+                    className="group content-auto flex flex-col gap-4 rounded-2xl border border-white/10 glass-card p-4 transition-all duration-200 hover:border-glow hover:shadow-glow-indigo hover-lift sm:flex-row sm:items-center row-alt"
                   >
                     {/* Thumbnail */}
                     <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl border border-white/10 bg-input">

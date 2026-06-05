@@ -38,9 +38,10 @@ export function StatsRow() {
       {items.map((stat) => (
         <Card
           key={stat.label}
-          className="flex items-center gap-4 border-default bg-card p-5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-card-hover"
+          hover
+          className="card-gradient-top flex items-center gap-4 border-white/10 glass-card p-5"
         >
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-accent-indigo/10 text-accent-indigo">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-accent-indigo/20 to-accent-violet/10 text-accent-indigo transition-transform duration-200 group-hover:scale-110">
             <stat.icon className="h-6 w-6" />
           </div>
           <div className="min-w-0 flex-1">

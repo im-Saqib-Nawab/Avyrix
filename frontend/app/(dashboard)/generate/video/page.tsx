@@ -320,7 +320,7 @@ function VideoGeneratePageContent() {
       <div className="w-full shrink-0 space-y-6 lg:w-[460px]">
         {/* Header */}
         <div className="space-y-1">
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">
+          <h1 className="text-2xl font-bold text-gradient-hero">
             Generate Video
           </h1>
           <p className="text-sm text-secondary">
@@ -331,8 +331,8 @@ function VideoGeneratePageContent() {
         {/* Prompt box */}
         <div
           className={cn(
-            'relative rounded-2xl border border-white/10 bg-gradient-to-br from-[#111827] to-[#0f1117] transition-all duration-200',
-            'focus-within:scale-[1.01] focus-within:border-accent-indigo focus-within:shadow-[0_0_0_4px_rgba(99,102,241,0.15)]'
+            'relative rounded-2xl glass-input transition-all duration-200',
+            'focus-within:scale-[1.01] focus-within:border-accent-cyan focus-within:shadow-[0_0_0_4px_rgba(6,182,212,0.15)]'
           )}
         >
           <textarea
@@ -376,7 +376,7 @@ function VideoGeneratePageContent() {
         )}
 
         {/* Generation settings */}
-        <div className="rounded-2xl border border-white/10 bg-gradient-to-br from-card to-card/80">
+        <div className="glass-card rounded-2xl border border-white/10">
           <button
             type="button"
             onClick={() => setSettingsOpen((o) => !o)}
@@ -488,10 +488,13 @@ function VideoGeneratePageContent() {
                   </div>
 
                   {/* Cost indicator */}
-                  <div className="rounded-xl bg-accent-violet/10 p-3">
-                    <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between rounded-xl border border-accent-cyan/30 bg-gradient-to-r from-accent-indigo/10 to-accent-cyan/10 p-3">
+                    <div className="flex items-center justify-between w-full">
                       <span className="text-sm text-secondary">Estimated cost</span>
-                      <span className="text-lg font-bold text-accent-violet">{creditCost} credits</span>
+                      <span className="inline-flex items-center gap-1.5 rounded-full border border-accent-cyan/40 bg-accent-indigo/20 px-3 py-1 text-sm font-bold text-accent-cyan shadow-glow-cyan">
+                        <Zap className="h-3.5 w-3.5 fill-current" />
+                        {creditCost} credits
+                      </span>
                     </div>
                     <p className="text-xs text-muted mt-1">
                       Video generation takes 2-4 minutes and runs in the background
@@ -540,7 +543,7 @@ function VideoGeneratePageContent() {
 
       {/* Right: output */}
       <div className="relative min-h-[500px] flex-1">
-        <div className="relative flex h-full min-h-[500px] flex-col items-center justify-center overflow-hidden rounded-2xl border border-dashed border-white/10 bg-gradient-to-br from-card/50 to-card/30 p-8">
+        <div className="drop-zone relative flex h-full min-h-[500px] flex-col items-center justify-center overflow-hidden rounded-2xl glass-card p-8">
           {/* Background decoration */}
           <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
             <div className="h-80 w-80 rounded-full bg-accent-violet/5 blur-[100px]" />

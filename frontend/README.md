@@ -36,8 +36,8 @@ Values are read in [`lib/config.ts`](lib/config.ts). Never hardcode API URLs in 
 ### Production example (Vercel)
 
 ```env
-NEXT_PUBLIC_API_URL=https://avyrix-backend.onrender.com
-NEXT_PUBLIC_WS_URL=wss://avyrix-backend.onrender.com
+NEXT_PUBLIC_API_URL=https://avyrix-backend.vercel.app
+NEXT_PUBLIC_WS_URL=wss://avyrix-backend.vercel.app
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_...
 ```
 

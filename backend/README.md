@@ -57,6 +57,33 @@ NEXT_PUBLIC_WS_URL=ws://localhost:3001
 
 ---
 
+## Deploy to Vercel
+
+Vercel auto-detects Express from `src/app.ts` (default export). Set **Root Directory** to `backend`.
+
+| Setting | Value |
+|---------|--------|
+| Root Directory | `backend` |
+| Install Command | `npm install` (from `backend/vercel.json`) |
+| Build Command | `npx prisma generate` |
+
+### Required env vars (Vercel dashboard)
+
+Set all variables from [`.env.example`](.env.example). Critical production values:
+
+| Variable | Example |
+|----------|---------|
+| `NODE_ENV` | `production` |
+| `DATABASE_URL` | PostgreSQL connection string |
+| `FRONTEND_URL` | `https://avyrix.vercel.app` (no trailing slash — used for CORS) |
+| `JWT_SECRET` / `JWT_REFRESH_SECRET` | Min 32 chars each |
+
+After deploy, verify: `GET https://avyrix-backend.vercel.app/health`
+
+> **Note:** WebSockets (`/ws`) and Bull background workers are limited on Vercel serverless. Generations use in-process fallback when Redis is unavailable. For full WebSocket + queue support, use [Render](#deploy-to-render-recommended) instead.
+
+---
+
 ## Deploy to Render (recommended)
 
 The Express server uses **WebSockets** and **background workers** — it cannot run on Vercel serverless.

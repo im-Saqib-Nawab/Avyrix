@@ -6,6 +6,7 @@ import helmet from 'helmet';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import { config } from '@/config';
+import { bootstrap } from '@/bootstrap';
 import { requestIdMiddleware } from '@/middleware/requestId.middleware';
 import { generalLimiter } from '@/middleware/rateLimit.middleware';
 import { errorMiddleware } from '@/middleware/error.middleware';
@@ -19,6 +20,17 @@ import adminRoutes from '@/modules/admin/admin.routes';
 import apiHealthRoutes from '@/modules/api-health/apiHealth.routes';
 
 export const app = express();
+
+if (process.env.VERCEL) {
+  app.use(async (_req, _res, next) => {
+    try {
+      await bootstrap();
+      next();
+    } catch (error) {
+      next(error);
+    }
+  });
+}
 
 app.use(requestIdMiddleware);
 app.use(helmet());
@@ -58,3 +70,5 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/api-health', apiHealthRoutes);
 
 app.use(errorMiddleware);
+
+export default app;

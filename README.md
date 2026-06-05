@@ -102,11 +102,26 @@ Note your backend URL, e.g. `https://avyrix-api.onrender.com`.
 
    | Variable | Example |
    |----------|---------|
-   | `NEXT_PUBLIC_API_URL` | `https://avyrix-api.onrender.com` |
-   | `NEXT_PUBLIC_WS_URL` | `wss://avyrix-api.onrender.com` (optional — auto-derived if omitted) |
+   | `NEXT_PUBLIC_API_URL` | `https://avyrix-backend.vercel.app` |
+   | `NEXT_PUBLIC_WS_URL` | `wss://avyrix-backend.vercel.app` (optional — auto-derived if omitted) |
    | `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | `pk_live_...` |
 
 5. Deploy.
+
+### Step 2b — Deploy backend (Vercel)
+
+1. Create a **second** Vercel project from the same repo.
+2. **Root Directory:** `backend`
+3. Vercel auto-detects Express from `src/app.ts`. Build uses [`backend/vercel.json`](backend/vercel.json).
+4. **Environment variables** — set all values from [`backend/.env.example`](backend/.env.example). Critical:
+
+   | Variable | Example |
+   |----------|---------|
+   | `FRONTEND_URL` | `https://avyrix.vercel.app` |
+   | `DATABASE_URL` | PostgreSQL connection string |
+   | `NODE_ENV` | `production` |
+
+5. Deploy and verify `GET https://avyrix-backend.vercel.app/health`.
 
 ### Step 3 — Post-deploy checklist
 

@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
+import { AvyrixLogo } from '@/components/brand/avyrix-logo';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -510,16 +511,13 @@ export default function LandingPage() {
       >
         <div className="mx-auto flex h-16 md:h-20 items-center justify-between px-4 md:px-8 lg:px-12 max-w-7xl">
           {/* Logo */}
-          <button 
+          <AvyrixLogo
+            href="/"
+            expanded
+            showTagline
             onClick={() => scrollToSection('hero')}
-            className="group relative flex items-center gap-2 text-2xl font-bold focus:outline-none"
-          >
-            <div className="absolute -inset-1 bg-gradient-to-r from-violet-600 to-emerald-600 rounded-lg blur opacity-0 group-hover:opacity-50 transition duration-500" />
-            <span className="relative bg-gradient-to-r from-white via-violet-200 to-white bg-clip-text text-transparent">
-              AVYRIX
-            </span>
-            <span className="relative text-sm font-medium text-violet-400 hidden sm:inline">AI</span>
-          </button>
+            className="text-2xl"
+          />
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-1">

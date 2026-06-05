@@ -25,6 +25,7 @@ import {
   Save,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { PageHeader } from '@/components/ui/page-header';
 
 type SettingTab = 'profile' | 'security';
 
@@ -125,20 +126,18 @@ export default function SettingsPage() {
 
   return (
     <div className="mx-auto max-w-5xl space-y-8 pb-16">
-      <div className="space-y-1">
-        <h1 className="text-3xl font-bold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">
-          Settings
-        </h1>
-        <p className="text-secondary">Manage your account</p>
-      </div>
+      <PageHeader title="Settings" description="Manage your account and security preferences" />
 
-      <Card className="border border-white/10 bg-gradient-to-br from-card to-card/80 p-6">
+      <Card className="glass-card gradient-border p-6">
         <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-start">
           <div
-            className="flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-accent-indigo via-accent-violet to-accent-cyan text-3xl font-bold text-white shadow-glow-indigo"
+            className="group relative flex h-24 w-24 cursor-pointer items-center justify-center rounded-full bg-gradient-to-br from-accent-indigo via-accent-violet to-accent-cyan text-3xl font-bold text-white shadow-glow-indigo ring-2 ring-accent-indigo/30 transition-transform duration-200 hover:scale-[1.02]"
             aria-hidden
           >
             {initials}
+            <div className="absolute inset-0 flex items-center justify-center rounded-full bg-black/50 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+              <span className="text-xs font-medium text-white">Edit</span>
+            </div>
           </div>
           <div className="flex-1 text-center sm:text-left">
             <h2 className="text-xl font-semibold text-primary">{fullName || profileUser?.full_name}</h2>
@@ -157,17 +156,17 @@ export default function SettingsPage() {
         </div>
       </Card>
 
-      <div className="flex gap-1 overflow-x-auto rounded-xl border border-white/10 bg-input p-1">
+      <div className="glass-surface flex gap-1 overflow-x-auto rounded-xl p-1">
         {tabs.map((tab) => (
           <button
             key={tab.id}
             type="button"
             onClick={() => setActiveTab(tab.id)}
             className={cn(
-              'flex shrink-0 items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium transition-all',
+              'relative flex shrink-0 items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium transition-all duration-200',
               activeTab === tab.id
-                ? 'bg-gradient-to-r from-accent-indigo to-accent-violet text-white shadow-glow-indigo'
-                : 'text-secondary hover:text-primary',
+                ? 'bg-gradient-to-r from-accent-indigo to-accent-violet text-white shadow-glow-indigo tab-gradient-active'
+                : 'text-secondary hover:bg-white/5 hover:text-primary',
             )}
           >
             {tab.icon}
@@ -185,7 +184,7 @@ export default function SettingsPage() {
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.25 }}
           >
-            <Card className="border border-white/10 bg-card p-6 md:p-8">
+            <Card className="glass-card p-6 md:p-8">
               <form onSubmit={handleSaveProfile} className="space-y-6">
                 <div className="space-y-4">
                   <div className="space-y-2">
@@ -234,7 +233,7 @@ export default function SettingsPage() {
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.25 }}
           >
-            <Card className="border border-white/10 bg-card p-6 md:p-8">
+            <Card className="glass-card p-6 md:p-8">
               <form onSubmit={handleUpdatePassword} className="space-y-6">
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-primary flex items-center gap-2">

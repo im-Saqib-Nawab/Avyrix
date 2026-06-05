@@ -271,7 +271,7 @@ function ImageGeneratePageContent() {
       <div className="w-full shrink-0 space-y-6 lg:w-[460px]">
         {/* Header */}
         <div className="space-y-1">
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">
+          <h1 className="text-2xl font-bold text-gradient-hero">
             Generate Image
           </h1>
           <p className="text-sm text-secondary">
@@ -280,8 +280,8 @@ function ImageGeneratePageContent() {
         </div>
         <div
           className={cn(
-            'relative rounded-2xl border border-white/10 bg-gradient-to-br from-[#111827] to-[#0f1117] transition-all duration-200',
-            'focus-within:scale-[1.01] focus-within:border-accent-indigo focus-within:shadow-[0_0_0_4px_rgba(99,102,241,0.15)]'
+            'relative rounded-2xl glass-input transition-all duration-200',
+            'focus-within:scale-[1.01] focus-within:border-accent-cyan focus-within:shadow-[0_0_0_4px_rgba(6,182,212,0.15)]'
           )}
         >
           <textarea
@@ -328,7 +328,7 @@ function ImageGeneratePageContent() {
         )}
 
         {/* Generation settings */}
-        <div className="rounded-2xl border border-white/10 bg-gradient-to-br from-card to-card/80">
+        <div className="glass-card rounded-2xl border border-white/10">
           <button
             type="button"
             onClick={() => setSettingsOpen((o) => !o)}
@@ -466,7 +466,7 @@ function ImageGeneratePageContent() {
 
       {/* Right: output */}
       <div className="relative min-h-[500px] flex-1">
-        <div className="relative flex h-full min-h-[500px] flex-col items-center justify-center overflow-hidden rounded-2xl border border-dashed border-white/10 bg-gradient-to-br from-card/50 to-card/30 p-8">
+        <div className="drop-zone relative flex h-full min-h-[500px] flex-col items-center justify-center overflow-hidden rounded-2xl glass-card p-8">
           {/* Background decoration */}
           <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
             <div className="h-80 w-80 rounded-full bg-accent-indigo/5 blur-[100px]" />

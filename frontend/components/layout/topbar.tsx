@@ -19,7 +19,7 @@ export function Topbar({ title, breadcrumb }: TopbarProps) {
   const [showNotifications, setShowNotifications] = React.useState(false);
 
   return (
-    <header className="sticky top-0 z-30 flex h-14 min-h-[56px] items-center justify-between border-b border-white/10 bg-base/80 px-4 backdrop-blur-xl md:px-6">
+    <header className="sticky top-0 z-30 flex h-14 min-h-[56px] items-center justify-between border-b border-white/10 glass-surface px-4 md:px-6">
       <div className="flex min-w-0 items-center gap-3">
         <button
           type="button"
@@ -57,7 +57,7 @@ export function Topbar({ title, breadcrumb }: TopbarProps) {
 
       <div className="flex items-center gap-3">
         {/* Quick Create Button */}
-        <button className="hidden items-center gap-2 rounded-lg bg-gradient-to-r from-accent-indigo/10 to-accent-violet/10 px-3 py-2 text-sm font-medium text-accent-indigo transition-all hover:scale-105 hover:shadow-glow-indigo sm:flex">
+        <button className="hidden items-center gap-2 rounded-button bg-gradient-to-r from-accent-indigo to-accent-violet px-3 py-2 text-sm font-medium text-white transition-all duration-200 hover:scale-[1.02] hover:shadow-glow-indigo sm:flex">
           <Sparkles className="h-4 w-4" />
           <span>Quick Create</span>
         </button>

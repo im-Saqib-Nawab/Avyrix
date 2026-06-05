@@ -74,9 +74,6 @@ export default function ForgotPasswordPage() {
             </form>
           ) : (
             <div className="space-y-4">
-              <Button className="w-full h-11" onClick={() => window.open('mailto:')}>
-                Open email app
-              </Button>
               <button 
                 onClick={() => setIsSubmitted(false)}
                 className="w-full text-center text-sm text-accent-indigo hover:underline font-medium"

@@ -1,34 +1,28 @@
 'use client';
 
 import * as React from 'react';
-import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
+import { PageHeader } from '@/components/ui/page-header';
 import { useAuthStore } from '@/store/auth.store';
 import { useUIStore } from '@/store/ui.store';
 import { api } from '@/lib/api';
 import { getApiErrorMessage } from '@/lib/api-error';
 import type { CreditPack, CreditTransaction, CreditTransactionType } from '@/types';
 import { useCreditsStore } from '@/store/credits.store';
-import { 
-  ChevronDown, 
-  TrendingUp, 
-  Calendar, 
+import {
+  ChevronDown,
+  TrendingUp,
   Zap,
   Crown,
-  Sparkles,
-  ArrowUpRight,
   Clock,
-  CheckCircle,
-  RefreshCw,
-  Wallet,
-  CreditCard,
   History,
-  Package,
   HelpCircle,
   Plus,
-  Coins
+  Coins,
+  ChevronLeft,
+  ChevronRight,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -39,7 +33,7 @@ function formatTxDate(iso: string): string {
   const date = new Date(iso);
   const now = new Date();
   const diffDays = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60 * 24));
-  
+
   if (diffDays === 0) return 'Today';
   if (diffDays === 1) return 'Yesterday';
   if (diffDays < 7) return `${diffDays} days ago`;
@@ -48,10 +42,14 @@ function formatTxDate(iso: string): string {
 
 function transactionBadgeVariant(type: CreditTransactionType): 'success' | 'error' | 'info' | 'neutral' {
   switch (type) {
-    case 'purchase': return 'success';
-    case 'deduction': return 'error';
-    case 'refund': return 'info';
-    default: return 'neutral';
+    case 'purchase':
+      return 'success';
+    case 'deduction':
+      return 'error';
+    case 'refund':
+      return 'info';
+    default:
+      return 'neutral';
   }
 }
 
@@ -154,119 +152,113 @@ export default function BillingPage() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8 space-y-8">
-      {/* Header */}
-      <div className="space-y-1">
-        <h1 className="text-3xl font-semibold tracking-tight text-white">Billing</h1>
-        <p className="text-gray-500 text-sm">Manage your subscription and credits</p>
-      </div>
+    <div className="mx-auto max-w-6xl space-y-8 pb-16">
+      <PageHeader title="Billing" description="Manage your subscription and credits" />
 
-      {/* Current Plan Card - Black/White theme */}
-      <div className="bg-white/[0.03] rounded-2xl border border-white/[0.08] p-6">
-        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
-          <div className="space-y-4">
+      {/* Credits balance card */}
+      <div className="gradient-border relative overflow-hidden rounded-2xl glass-card p-6 md:p-8">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(79,70,229,0.15),transparent_60%)]" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(236,72,153,0.08),transparent_50%)]" />
+
+        <div className="relative flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
+          <div className="space-y-5">
             <div className="flex items-center gap-3">
-              <div className="h-12 w-12 rounded-xl bg-white/[0.05] flex items-center justify-center border border-white/[0.05]">
-                <Crown className="h-6 w-6 text-gray-400" />
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-accent-violet/30 bg-gradient-to-br from-accent-indigo/20 to-accent-violet/10">
+                <Crown className="h-6 w-6 text-accent-violet" />
               </div>
               <div>
-                <h2 className="text-xl font-semibold text-white">Credit balance</h2>
-                <div className="flex items-center gap-2 mt-0.5">
-                  <span className="text-xs text-gray-500 capitalize">{user?.subscription_status ?? 'free'} plan</span>
-                  <Badge
-                    variant={user?.subscription_status === 'active' ? 'success' : 'neutral'}
-                    className="bg-emerald-500/10 text-emerald-400 border-emerald-500/20 text-xs"
-                  >
+                <h2 className="text-xl font-semibold text-primary">Credit Balance</h2>
+                <div className="mt-0.5 flex items-center gap-2">
+                  <span className="text-xs capitalize text-muted">{user?.subscription_status ?? 'free'} plan</span>
+                  <Badge variant={user?.subscription_status === 'active' ? 'success' : 'neutral'}>
                     {subscriptionLabel}
                   </Badge>
                 </div>
               </div>
             </div>
-            
+
             <div>
               <div className="flex items-baseline gap-2">
-                <span className="text-4xl font-bold text-white">{credits.toLocaleString()}</span>
-                <span className="text-gray-500">/ {PLAN_CREDIT_LIMIT} credits</span>
+                <span className="text-5xl font-bold tabular-nums text-gradient-primary">{credits.toLocaleString()}</span>
+                <span className="text-secondary">/ {PLAN_CREDIT_LIMIT} credits</span>
               </div>
-              <p className="text-sm text-gray-500 mt-1">{remainingCredits} credits left this month</p>
+              <p className="mt-1 text-sm text-muted">{remainingCredits} credits left this month</p>
             </div>
-            
-            <div className="w-full max-w-sm space-y-1">
+
+            <div className="w-full max-w-sm space-y-2">
               <div className="flex justify-between text-xs">
-                <span className="text-gray-500">Usage</span>
-                <span className="text-gray-300">{creditPercent}%</span>
+                <span className="text-muted">Usage</span>
+                <span className="font-medium text-primary">{creditPercent}%</span>
               </div>
-              <Progress value={creditPercent} className="h-1.5 bg-white/[0.05]" />
+              <Progress value={creditPercent} />
             </div>
           </div>
-          
-          <button
+
+          <Button
+            variant="secondary"
             onClick={() => packsRef.current?.scrollIntoView({ behavior: 'smooth' })}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-white/[0.08] bg-white/[0.02] text-sm text-gray-300 hover:bg-white/[0.05] hover:border-white/[0.12] transition-all"
+            className="shrink-0 gap-2"
+            rightIcon={<ChevronDown className="h-4 w-4" />}
+            leftIcon={<Plus className="h-4 w-4" />}
           >
-            <Plus className="h-4 w-4" />
             Need more credits
-            <ChevronDown className="h-4 w-4" />
-          </button>
+          </Button>
         </div>
       </div>
 
-      {/* Credit Packs - Black/White theme */}
+      {/* Credit packs */}
       <div ref={packsRef} className="scroll-mt-20 space-y-4">
         <div>
           <div className="flex items-center gap-2">
-            <Coins className="h-5 w-5 text-gray-400" />
-            <h3 className="text-xl font-semibold text-white">Credit packs</h3>
+            <Coins className="h-5 w-5 text-accent-indigo" />
+            <h3 className="text-xl font-semibold text-primary">Credit Packs</h3>
           </div>
-          <p className="text-gray-500 text-sm mt-1">One-time purchase, never expires</p>
+          <p className="mt-1 text-sm text-secondary">One-time purchase, never expires</p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {creditPacks.map((pack) => {
             const priceValue = parseFloat(pack.price_display.replace('$', ''));
             const creditsPerDollar = Math.round(pack.credits / priceValue);
-            
+
             return (
               <div
                 key={pack.id}
                 className={cn(
-                  "relative rounded-xl border transition-all duration-200 bg-white/[0.02]",
-                  pack.popular 
-                    ? "border-white/[0.15] ring-1 ring-white/[0.08]" 
-                    : "border-white/[0.06] hover:border-white/[0.1] hover:bg-white/[0.03]",
-                  buyingPack === pack.id && "opacity-60"
+                  'relative rounded-2xl border transition-all duration-200 hover-lift glass-card',
+                  pack.popular
+                    ? 'gradient-border border-glow shadow-glow-violet'
+                    : 'border-white/10 hover:border-glow hover:shadow-glow-indigo',
+                  buyingPack === pack.id && 'opacity-60',
                 )}
               >
                 {pack.popular && (
-                  <div className="absolute -top-2 left-4">
-                    <span className="text-[11px] font-medium px-2 py-0.5 rounded-full bg-gray-600 text-white">
+                  <div className="absolute -top-2.5 left-4">
+                    <span className="rounded-full bg-gradient-to-r from-accent-indigo to-accent-pink px-2.5 py-0.5 text-[11px] font-semibold text-white shadow-glow-indigo">
                       Best value
                     </span>
                   </div>
                 )}
-                
+
                 <div className="p-5">
-                  <h4 className="font-medium text-white">{pack.name}</h4>
+                  <h4 className="font-medium text-primary">{pack.name}</h4>
                   <div className="mt-3">
-                    <span className="text-3xl font-bold text-white">{pack.credits.toLocaleString()}</span>
-                    <span className="text-gray-500 text-sm ml-1">credits</span>
+                    <span className="text-3xl font-bold text-primary">{pack.credits.toLocaleString()}</span>
+                    <span className="ml-1 text-sm text-muted">credits</span>
                   </div>
                   <div className="mt-4">
-                    <span className="text-2xl font-semibold text-white">{pack.price_display}</span>
-                    <p className="text-xs text-gray-500 mt-1">~{creditsPerDollar} credits per $</p>
+                    <span className="text-2xl font-semibold text-gradient-primary">{pack.price_display}</span>
+                    <p className="mt-1 text-xs text-muted">~{creditsPerDollar} credits per $</p>
                   </div>
-                  <button
+                  <Button
                     onClick={() => handleBuyPack(pack.id)}
                     disabled={buyingPack === pack.id}
-                    className={cn(
-                      "w-full mt-5 py-2.5 rounded-xl text-sm font-medium transition-all",
-                      pack.popular
-                        ? "bg-white text-black hover:bg-gray-200"
-                        : "bg-white/[0.08] text-gray-200 hover:bg-white/[0.12]"
-                    )}
+                    variant={pack.popular ? 'primary' : 'secondary'}
+                    className="mt-5 w-full"
+                    isLoading={buyingPack === pack.id}
                   >
                     {buyingPack === pack.id ? 'Processing...' : 'Buy now'}
-                  </button>
+                  </Button>
                 </div>
               </div>
             );
@@ -274,108 +266,104 @@ export default function BillingPage() {
         </div>
       </div>
 
-      {/* Annual Plan Suggestion - Black/White theme */}
-      <div className="bg-white/[0.02] rounded-xl border border-white/[0.06] p-4 hover:bg-white/[0.03] transition-colors">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      {/* Annual plan suggestion */}
+      <div className="glass-card rounded-2xl border border-white/10 p-4 transition-all duration-200 hover:border-glow hover-lift">
+        <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-lg bg-white/[0.05] flex items-center justify-center">
-              <Zap className="h-5 w-5 text-gray-400" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-accent-indigo/20 to-accent-cyan/10">
+              <Zap className="h-5 w-5 text-accent-cyan" />
             </div>
             <div>
-              <p className="text-sm font-medium text-white">Go annual & save 20%</p>
-              <p className="text-xs text-gray-500">$19.99/month, billed yearly</p>
+              <p className="text-sm font-medium text-primary">Go annual & save 20%</p>
+              <p className="text-xs text-muted">$19.99/month, billed yearly</p>
             </div>
           </div>
-          <button className="text-sm text-gray-300 hover:text-white transition-colors">
+          <button className="text-sm text-accent-indigo transition-colors duration-200 hover:text-accent-violet">
             Switch to annual →
           </button>
         </div>
       </div>
 
-      {/* Transaction History - Black/White theme */}
+      {/* Transaction history */}
       <div className="space-y-4">
         <div>
           <div className="flex items-center gap-2">
-            <History className="h-5 w-5 text-gray-400" />
-            <h3 className="text-xl font-semibold text-white">History</h3>
+            <History className="h-5 w-5 text-accent-indigo" />
+            <h3 className="text-xl font-semibold text-primary">History</h3>
           </div>
-          <p className="text-gray-500 text-sm mt-1">Your recent credit activity</p>
+          <p className="mt-1 text-sm text-secondary">Your recent credit activity</p>
         </div>
 
-        <div className="bg-white/[0.02] rounded-xl border border-white/[0.06] overflow-hidden">
+        <div className="overflow-hidden rounded-2xl border border-white/10 glass-card">
           {pageTransactions.length === 0 ? (
             <div className="py-12 text-center">
-              <Clock className="h-10 w-10 text-gray-600 mx-auto mb-3" />
-              <p className="text-gray-500 text-sm">No transactions yet</p>
+              <Clock className="mx-auto mb-3 h-10 w-10 text-muted" />
+              <p className="text-sm text-muted">No transactions yet</p>
             </div>
           ) : (
             <>
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="border-b border-white/[0.06] bg-white/[0.02]">
-                      <th className="text-left px-5 py-3 text-xs font-medium text-gray-500">Date</th>
-                      <th className="text-left px-5 py-3 text-xs font-medium text-gray-500">Description</th>
-                      <th className="text-left px-5 py-3 text-xs font-medium text-gray-500">Type</th>
-                      <th className="text-right px-5 py-3 text-xs font-medium text-gray-500">Amount</th>
-                      <th className="text-right px-5 py-3 text-xs font-medium text-gray-500">Balance</th>
+                    <tr className="sticky-glass-header border-b border-white/10">
+                      <th className="px-5 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted">Date</th>
+                      <th className="px-5 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted">Description</th>
+                      <th className="px-5 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted">Type</th>
+                      <th className="px-5 py-3 text-right text-xs font-medium uppercase tracking-wider text-muted">Amount</th>
+                      <th className="px-5 py-3 text-right text-xs font-medium uppercase tracking-wider text-muted">Balance</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-white/[0.04]">
+                  <tbody className="divide-y divide-white/5">
                     {pageTransactions.map((tx) => (
-                      <tr key={tx.id} className="hover:bg-white/[0.02] transition-colors">
-                        <td className="px-5 py-3 text-gray-500 text-xs">
-                          {formatTxDate(tx.date)}
-                        </td>
-                        <td className="px-5 py-3 text-gray-300">
-                          {tx.description}
-                        </td>
+                      <tr
+                        key={tx.id}
+                        className="row-alt content-auto transition-colors duration-200 hover:bg-accent-indigo/5"
+                      >
+                        <td className="px-5 py-3 text-xs text-muted">{formatTxDate(tx.date)}</td>
+                        <td className="px-5 py-3 text-primary">{tx.description}</td>
                         <td className="px-5 py-3">
-                          <Badge variant={transactionBadgeVariant(tx.type)} className="text-xs capitalize">
+                          <Badge variant={transactionBadgeVariant(tx.type)} className="capitalize">
                             {tx.type}
                           </Badge>
                         </td>
-                        <td className={cn(
-                          "px-5 py-3 text-right font-mono",
-                          tx.amount > 0 ? "text-emerald-400" : "text-red-400"
-                        )}>
+                        <td
+                          className={cn(
+                            'px-5 py-3 text-right font-mono',
+                            tx.amount > 0 ? 'text-success' : 'text-error',
+                          )}
+                        >
                           {formatAmount(tx.amount)}
                         </td>
-                        <td className="px-5 py-3 text-right text-gray-400 font-mono">
-                          {tx.balance_after}
-                        </td>
+                        <td className="px-5 py-3 text-right font-mono text-secondary">{tx.balance_after}</td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
 
-              {/* Pagination */}
               {totalPages > 1 && (
-                <div className="flex items-center justify-between px-5 py-3 border-t border-white/[0.06]">
-                  <button
-                    onClick={() => setPage(p => Math.max(0, p - 1))}
+                <div className="flex items-center justify-between border-t border-white/10 px-5 py-3">
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    onClick={() => setPage((p) => Math.max(0, p - 1))}
                     disabled={page === 0}
-                    className={cn(
-                      "text-sm px-3 py-1 rounded-lg transition-colors",
-                      page === 0 ? "text-gray-600 cursor-not-allowed" : "text-gray-400 hover:text-white hover:bg-white/[0.05]"
-                    )}
+                    leftIcon={<ChevronLeft className="h-4 w-4" />}
                   >
                     Previous
-                  </button>
-                  <span className="text-xs text-gray-500">
+                  </Button>
+                  <span className="text-xs text-muted">
                     Page {page + 1} of {totalPages}
                   </span>
-                  <button
-                    onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))}
+                  <Button
+                    variant={page >= totalPages - 1 ? 'secondary' : 'primary'}
+                    size="sm"
+                    onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
                     disabled={page >= totalPages - 1}
-                    className={cn(
-                      "text-sm px-3 py-1 rounded-lg transition-colors",
-                      page >= totalPages - 1 ? "text-gray-600 cursor-not-allowed" : "text-gray-400 hover:text-white hover:bg-white/[0.05]"
-                    )}
+                    rightIcon={<ChevronRight className="h-4 w-4" />}
                   >
                     Next
-                  </button>
+                  </Button>
                 </div>
               )}
             </>
@@ -383,19 +371,19 @@ export default function BillingPage() {
         </div>
       </div>
 
-      {/* Support - Black/White theme */}
-      <div className="bg-white/[0.02] rounded-xl border border-white/[0.06] p-5 hover:bg-white/[0.03] transition-colors">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      {/* Support */}
+      <div className="glass-card rounded-2xl border border-white/10 p-5 transition-all duration-200 hover:border-glow hover-lift">
+        <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-lg bg-white/[0.05] flex items-center justify-center">
-              <HelpCircle className="h-5 w-5 text-gray-400" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-accent-indigo/20 to-accent-violet/10">
+              <HelpCircle className="h-5 w-5 text-accent-violet" />
             </div>
             <div>
-              <p className="text-sm font-medium text-white">Questions about billing?</p>
-              <p className="text-xs text-gray-500">We&apos;re here to help 24/7</p>
+              <p className="text-sm font-medium text-primary">Questions about billing?</p>
+              <p className="text-xs text-muted">We&apos;re here to help 24/7</p>
             </div>
           </div>
-          <button className="text-sm text-gray-300 hover:text-white transition-colors">
+          <button className="text-sm text-accent-indigo transition-colors duration-200 hover:text-accent-violet">
             Contact support →
           </button>
         </div>
