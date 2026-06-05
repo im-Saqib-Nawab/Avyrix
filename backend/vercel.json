@@ -1,6 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
+  "framework": "express",
   "installCommand": "npm install",
   "buildCommand": "npx prisma generate",
   "regions": ["iad1"]
