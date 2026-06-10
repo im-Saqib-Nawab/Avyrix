@@ -30,6 +30,8 @@ CREATE TABLE "users" (
     "subscription_status" "SubscriptionStatus" NOT NULL DEFAULT 'free',
     "is_verified" BOOLEAN NOT NULL DEFAULT false,
     "verification_token" TEXT,
+    "verification_token_expires_at" TIMESTAMP(3),
+    "password_reset_token" TEXT,
     "refresh_token_hash" TEXT,
     "reset_token_expires_at" TIMESTAMP(3),
     "stripe_customer_id" TEXT,
