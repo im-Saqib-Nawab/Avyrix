@@ -4,7 +4,7 @@
   "description": "AVYRIX AI — production backend API",
   "main": "dist/server.js",
   "engines": {
-    "node": ">=20"
+    "node": "20.x"
   },
   "scripts": {
     "dev": "tsx watch src/server.ts",
@@ -58,12 +58,12 @@
     "@types/nodemailer": "^6.4.17",
     "@types/uuid": "^10.0.0",
     "@types/ws": "^8.5.14",
-    "typescript": "^5.8.2"
+    "typescript": "^5.8.2",
+    "prisma": "^6.4.1",
+    "tsc-alias": "^1.8.10"
   },
   "devDependencies": {
-    "prisma": "^6.4.1",
     "ts-node": "^10.9.2",
-    "tsc-alias": "^1.8.10",
     "tsconfig-paths": "^4.2.0",
     "tsx": "^4.19.3"
   }

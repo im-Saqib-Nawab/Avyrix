@@ -59,13 +59,14 @@ NEXT_PUBLIC_WS_URL=ws://localhost:3001
 
 ## Deploy to Vercel
 
-Vercel auto-detects Express from `src/app.ts` (default export). Set **Root Directory** to `backend`.
+Vercel runs the compiled Express app from `dist/app.js`. Set **Root Directory** to `backend`. All build settings come from `backend/vercel.json` — leave dashboard overrides **OFF**.
 
 | Setting | Value |
 |---------|--------|
 | Root Directory | `backend` |
-| Install Command | `npm install` (from `backend/vercel.json`) |
-| Build Command | `npx prisma generate` |
+| Install Command | `npm install --include=dev` |
+| Build Command | `npm run build` |
+| Output Directory | `dist` |
 
 ### Required env vars (Vercel dashboard)
 

@@ -3,7 +3,7 @@
   "version": 2,
   "framework": "express",
   "installCommand": "npm install --include=dev",
-  "buildCommand": "npx prisma generate",
-  "outputDirectory": null,
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
   "regions": ["iad1"]
 }
