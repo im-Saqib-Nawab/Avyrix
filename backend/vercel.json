@@ -4,5 +4,6 @@
   "framework": "express",
   "installCommand": "npm install --include=dev",
   "buildCommand": "npx prisma generate",
+  "outputDirectory": null,
   "regions": ["iad1"]
 }
