@@ -37,27 +37,43 @@ function sanitizeMeta(meta: Record<string, unknown>): Record<string, unknown> {
   return result;
 }
 
-const transports: winston.transport[] = [
-  new winston.transports.File({
-    filename: path.join('logs', 'error.log'),
-    level: 'error',
-  }),
-  new winston.transports.File({
-    filename: path.join('logs', 'combined.log'),
-  }),
-];
+/** Vercel/Lambda have a read-only filesystem — file transports crash on startup. */
+const isServerlessRuntime = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME);
 
-if (config.NODE_ENV === 'development') {
+const transports: winston.transport[] = [];
+
+if (!isServerlessRuntime) {
+  transports.push(
+    new winston.transports.File({
+      filename: path.join('logs', 'error.log'),
+      level: 'error',
+    }),
+    new winston.transports.File({
+      filename: path.join('logs', 'combined.log'),
+    }),
+  );
+}
+
+if (config.NODE_ENV === 'development' || isServerlessRuntime) {
   transports.push(
     new winston.transports.Console({
-      format: winston.format.combine(
-        winston.format.colorize(),
-        winston.format.timestamp(),
-        winston.format.printf(({ level, message, timestamp, ...meta }) => {
-          const metaStr = Object.keys(meta).length ? ` ${JSON.stringify(sanitizeMeta(meta))}` : '';
-          return `${timestamp} ${level}: ${message}${metaStr}`;
-        }),
-      ),
+      format:
+        config.NODE_ENV === 'development'
+          ? winston.format.combine(
+              winston.format.colorize(),
+              winston.format.timestamp(),
+              winston.format.printf(({ level, message, timestamp, ...meta }) => {
+                const metaStr = Object.keys(meta).length
+                  ? ` ${JSON.stringify(sanitizeMeta(meta))}`
+                  : '';
+                return `${timestamp} ${level}: ${message}${metaStr}`;
+              }),
+            )
+          : winston.format.combine(
+              winston.format.timestamp(),
+              winston.format.errors({ stack: true }),
+              winston.format.json(),
+            ),
     }),
   );
 }
